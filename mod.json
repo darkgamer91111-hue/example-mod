@@ -1,8 +1,12 @@
 {
-    "geode": "3.0.0-beta.1",
+    "geode": "2.0.0-beta.1",
     "id": "darkgamer91111hue.accuratepercent",
     "version": "1.0.0",
     "name": "Accurate Menu Percentage",
     "developer": "darkgamer91111-hue",
-    "description": "Shows accurate decimals outside levels."
+    "description": "Shows accurate decimals outside levels.",
+    "dependencies": [],
+    "resources": {
+        "sprites": []
+    }
 }
