@@ -7,18 +7,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Download Geode CLI
+    - name: Set up Geode CLI
       run: |
         curl -LO https://github.com
         tar -xf geode-cli-win.zip
         echo "${{ github.workspace }}" >> $GITHUB_PATH
         
-    - name: Set up Geode SDK
+    - name: Build Mod File
       run: |
-        ./geode sdk install "${{ github.workspace }}/geode-sdk"
-        ./geode sdk set-current "${{ github.workspace }}/geode-sdk"
-        
-    - name: Configure and Build
-      run: |
+        ./geode profile add --default --sdk 3.0.0-beta.1 dummy-profile
         cmake -B build -DCMAKE_BUILD_TYPE=Release
-        cmake --build build --config Release --target package
+        cmake --build build --config Release
