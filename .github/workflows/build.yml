@@ -6,19 +6,19 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
-
-    - name: Initialize Standard Environment
-      run: |
-        echo "Initializing build environment..."
-        mkdir build
-
-    - name: Compile Valid Target
-      run: |
-        echo "Compiling structural project components..."
-        echo "Build completed successfully." > build/success.txt
-
-    - name: Package Output Artifact
-      uses: actions/upload-artifact@v4
       with:
-        name: FinishedMod
-        path: build/success.txt
+        submodules: recursive
+
+    - name: Native Geode Package Compilation
+      uses: geode-sdk/build-geode-mod@main
+      with:
+        bindings: geode-sdk/bindings
+        combine: true
+
+    - name: Create Global Release Asset
+      uses: softprops/action-gh-release@v2
+      with:
+        files: build/*.geode
+        tag_name: v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
