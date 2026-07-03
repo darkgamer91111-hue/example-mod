@@ -6,7 +6,19 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Build Mod
-      uses: geode-sdk/build-geode-mod@main
-      with:
-        bindings: geode-sdk/bindings
+    
+    - name: Download Geode CLI
+      run: |
+        curl -LO https://github.com
+        tar -xf geode-cli-win.zip
+        echo "${{ github.workspace }}" >> $GITHUB_PATH
+        
+    - name: Set up Geode SDK
+      run: |
+        ./geode sdk install "${{ github.workspace }}/geode-sdk"
+        ./geode sdk set-current "${{ github.workspace }}/geode-sdk"
+        
+    - name: Configure and Build
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
+        cmake --build build --config Release --target package
