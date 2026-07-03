@@ -1,26 +1,25 @@
 #include <Geode/Geode.hpp>
-#include <Geode/modify/PlayLayer.hpp>
+#include <Geode/modify/LevelInfoLayer.hpp>
 
 using namespace geode::prelude;
 
-class $modify(MyPlayLayer, PlayLayer) {
-    void updateProgressbar() {
-        PlayLayer::updateProgressbar();
+class $modify(MyLevelInfoLayer, LevelInfoLayer) {
+    bool init(GJGameLevel* level, bool challenge) {
+        if (!LevelInfoLayer::init(level, challenge)) return false;
 
-        if (m_percentLabel) {
-            double currentX = m_player1->m_position.x;
-            double endX = m_levelLength;
+        // Pull the normal progress percentage saved on your account for this level
+        double normalPercent = level->m_normalPercent;
 
-            if (endX <= 0.0) return;
-
-            double accuratePercent = (currentX / endX) * 100.0;
-
-            if (accuratePercent > 100.0) accuratePercent = 100.0;
-            if (accuratePercent < 0.0) accuratePercent = 0.0;
-
-            std::string formatText = numToFormatedString(accuratePercent, 2) + "%";
-            
-            m_percentLabel->setString(formatText.c_str());
+        // Verify that you have actually played or gotten progress on the level
+        if (normalPercent > 0.0) {
+            // Find the original text layer that displays the percentage numbers on screen
+            auto percentLabel = typeinfo_cast<CCLabelBMFont*>(this->getChildByID("percentage-label"));
+            if (percentLabel) {
+                // Enforce exactly two decimal places (e.g., 55.37%)
+                std::string newFormat = numToFormatedString(normalPercent, 2) + "%";
+                percentLabel->setString(newFormat.c_str());
+            }
         }
+        return true;
     }
 };
