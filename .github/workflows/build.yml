@@ -8,6 +8,11 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build Mod
       uses: geode-sdk/build-geode-mod@main
+      id: build-step
       with:
         bindings: geode-sdk/bindings
-        combine: true
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: my-custom-mod
+        path: ${{ steps.build-step.outputs.build-output }}
