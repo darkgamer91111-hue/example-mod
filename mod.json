@@ -5,7 +5,7 @@
     },
     "id": "darkgamer91111hue.accuratepercent",
     "version": "1.0.0",
-    "name": "Accurate Menu Percentage",
+    "name": "Menu Percentage",
     "developer": "darkgamer91111-hue",
-    "description": "Shows accurate decimals outside levels."
+    "description": "Shows level progress on the info layer."
 }
