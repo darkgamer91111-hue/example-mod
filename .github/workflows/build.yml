@@ -6,19 +6,5 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
-    
-    - name: Download Official Geode CLI Tool
-      shell: powershell
-      run: |
-        Invoke-WebRequest -Uri "https://github.com" -OutFile "geode-cli-win.zip"
-        Expand-Archive -Path "geode-cli-win.zip" -DestinationPath "." -Force
-        echo "${{ github.workspace }}" >> $env:GITHUB_PATH
-
-    - name: Initialize Developer Profile
-      run: |
-        ./geode profile add --default --sdk 3.0.0-beta.1 dummy-profile
-
-    - name: Compile Mod File
-      run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=Release
-        cmake --build build --config Release
+    - name: Build Geode Mod
+      uses: geode-sdk/build-geode-mod@main
