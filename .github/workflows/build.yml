@@ -6,8 +6,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Geode CLI & Build
-      uses: geode-sdk/build-geode-mod@main
-      id: build-step
       with:
-        bindings: geode-sdk/bindings
+        submodules: recursive
+    - name: Configure CMake
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+    - name: Build Project
+      run: cmake --build build --config Release
