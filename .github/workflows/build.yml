@@ -9,7 +9,7 @@ jobs:
     
     - name: Download Official Geode CLI Tool
       run: |
-        curl -LO https://github.com
+        curl -fLo geode-cli-win.zip "https://github.com"
         tar -xf geode-cli-win.zip
         echo "${{ github.workspace }}" >> $GITHUB_PATH
 
