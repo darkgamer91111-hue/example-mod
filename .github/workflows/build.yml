@@ -6,7 +6,11 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Build Geode Mod
+      with:
+        submodules: recursive
+
+    - name: Set up Geode CLI & SDK
       uses: geode-sdk/build-geode-mod@main
       with:
+        bindings: geode-sdk/bindings
         combine: true
