@@ -6,8 +6,18 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Build Geode Mod
-      uses: geode-sdk/build-geode-mod@main
-      with:
-        bindings: geode-sdk/bindings
-        combine: true
+    
+    - name: Download Official Geode CLI Tool
+      run: |
+        curl -LO https://github.com
+        tar -xf geode-cli-win.zip
+        echo "${{ github.workspace }}" >> $GITHUB_PATH
+
+    - name: Initialize Developer Profile
+      run: |
+        ./geode profile add --default --sdk 3.0.0-beta.1 dummy-profile
+
+    - name: Compile Mod File
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
+        cmake --build build --config Release
